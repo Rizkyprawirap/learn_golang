@@ -1,6 +1,6 @@
 package seeders
 
-import(
+import (
 	"github.com/rizkyprawirap/Toko/database/fakers"
 	"gorm.io/gorm"
 )
@@ -12,6 +12,7 @@ type Seeder struct {
 func RegisterSeeders(db *gorm.DB) []Seeder {
 	return []Seeder{
 		{Seeder: fakers.UserFaker(db)},
+		{Seeder: fakers.ProductFaker(db)},
 	}
 }
 
