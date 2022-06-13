@@ -48,6 +48,16 @@ func (server *Server) initializeDB(dbConfig DBConfig) {
 		fmt.Println(err)
 		panic("Error connecting to database server!")
 	}
+
+	for _, model := range RegisterModels() {
+		err = server.DB.Debug().AutoMigrate(model.Model)
+
+		if err != nil {
+			log.Fatal(err)
+		}	
+	}
+
+	fmt.Println("Database Migrated Sucessfully!")
 }
 
 func (server *Server) Run(addr string) {
