@@ -1,7 +1,9 @@
 package fakers
 
 import(
-	"github.com/rizkyprawirap/Toko/app/models"
+	"github.com/bxcodec/faker/v3"
+
+	"github.com/RizkyPrawira/toko/models"
 	"github.com/google/uuid"
 	"gorm.io/gorm"
 )

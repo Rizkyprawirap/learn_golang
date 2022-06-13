@@ -8,6 +8,7 @@ import (
 
 	"github.com/gorilla/mux"
 	"github.com/joho/godotenv"
+	"github.com/rizkyprawirap/Toko/database/seeders"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -33,17 +34,18 @@ type DBConfig struct {
 
 func (server *Server) Initialize(appConfig AppConfig, dbConfig DBConfig) {
 	fmt.Println("Welcome to " + appConfig.AppName)
-	
+
 	server.initializeDB(dbConfig)
 	server.initializeRoutes()
+	seeders.DBSeed(server.DB)
 }
 
 func (server *Server) initializeDB(dbConfig DBConfig) {
-	
+
 	var err error
 	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=disable TimeZone=Asia/Jakarta", dbConfig.DBHost, dbConfig.DBUser, dbConfig.DBPassword, dbConfig.DBName, dbConfig.DBPort)
 	server.DB, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
-	
+
 	if err != nil {
 		fmt.Println(err)
 		panic("Error connecting to database server!")
@@ -54,7 +56,7 @@ func (server *Server) initializeDB(dbConfig DBConfig) {
 
 		if err != nil {
 			log.Fatal(err)
-		}	
+		}
 	}
 
 	fmt.Println("Database Migrated Sucessfully!")
